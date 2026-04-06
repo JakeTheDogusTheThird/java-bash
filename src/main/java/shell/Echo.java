@@ -3,12 +3,12 @@ package shell;
 public class Echo implements Command {
     @Override
     public CommandResult execute(String... args) {
-        if (args.length == 1) {
+        if (args.length == 0) {
             return new CommandResult("");
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < args.length; i++) {
-            sb.append(args[i]);
+        for (String arg : args) {
+            sb.append(arg);
             sb.append(" ");
         }
         sb.replace(sb.length() - 1, sb.length(), "\n");

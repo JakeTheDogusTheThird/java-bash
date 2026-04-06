@@ -4,26 +4,28 @@ import java.io.File;
 import java.util.Optional;
 
 public class Type implements Command {
+    private static final String SEPARATOR = File.pathSeparator;
     private static final String PATH = System.getenv("PATH");
-    private static final String[] PATH_EXT = System.getenv("PATHEXT").split(";");
+    private static final String[] PATH_EXT = System.getenv("PATHEXT").split(SEPARATOR);
 
     @Override
     public CommandResult execute(String... args) {
-        if (args.length == 1) {
+        if (args.length == 0) {
             return new CommandResult("");
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < args.length; i++) {
-            if (CommandFactory.isBuiltIn(args[i])) {
-                sb.append(String.format("%s is a shell built in%n", args[i]));
+        for (String arg : args) {
+            if (CommandFactory.isBuiltIn(arg)) {
+                sb.append(String.format("%s is a shell built in%n", arg));
+                continue;
             }
 
-            Optional<String> commandPath = searchCommand(args[i]);
+            Optional<String> commandPath = searchCommand(arg);
             if (commandPath.isPresent()) {
-                sb.append(String.format("%s is %s%n", args[i], commandPath.get()));
+                sb.append(String.format("%s is %s%n", arg, commandPath.get()));
             } else {
-                sb.append(String.format("%s is not a shell built in%n", args[i]));
+                sb.append(String.format("%s is not a shell built in%n", arg));
             }
         }
         return new CommandResult(sb.toString());
@@ -31,7 +33,7 @@ public class Type implements Command {
 
     private Optional<String> searchCommand(String command) {
         // windows
-        String[] pathDirectories = PATH.split(";");
+        String[] pathDirectories = PATH.split(SEPARATOR);
         for (String directoryPath : pathDirectories) {
             File directory = new File(directoryPath);
             if (!directory.isDirectory()) {
