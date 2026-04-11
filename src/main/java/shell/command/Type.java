@@ -21,8 +21,8 @@ public class Type implements Command {
                 sb.append(String.format("%s is a shell built in%n", arg));
                 continue;
             }
-            if (context.isExternal(arg)) {
-                sb.append(String.format("%s is %s%n", arg, context.getExternalPath(arg)));
+            if (context.resolveExternal(arg).isPresent()) {
+                sb.append(String.format("%s is %s%n", arg, context.resolveExternal(arg).get()));
             } else {
                 sb.append(String.format("%s is not a shell built in%n", arg));
             }
