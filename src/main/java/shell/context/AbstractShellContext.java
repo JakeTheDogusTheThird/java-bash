@@ -3,6 +3,7 @@ package shell.context;
 import shell.command.Command;
 import shell.command.Echo;
 import shell.command.Exit;
+import shell.command.ExternalCommand;
 import shell.command.NotACommand;
 import shell.command.Type;
 
@@ -60,9 +61,9 @@ abstract class AbstractShellContext implements ShellContext {
         if (isBuiltIn(commandName)) {
             return builtins.get(commandName);
         }
-//        if (resolveExternal(commandName)) {
-//            return new NotACommand(commandName);
-//        }
+        if (resolveExternal(commandName).isPresent()) {
+            return new ExternalCommand(resolveExternal(commandName).get());
+        }
         return new NotACommand(commandName);
     }
 

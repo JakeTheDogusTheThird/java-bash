@@ -13,7 +13,5 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Shell shell = new Shell(context, sc);
         shell.run();
-
-        System.out.println(System.getProperty("os.name"));
     }
 }
