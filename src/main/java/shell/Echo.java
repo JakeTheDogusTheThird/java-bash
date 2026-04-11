@@ -3,15 +3,13 @@ package shell;
 public class Echo implements Command {
     @Override
     public CommandResult execute(String... args) {
-        if (args.length == 1) {
+        if (args.length == 0) {
             return new CommandResult("");
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            if (i != 0) {
-                sb.append(args[i]);
-                sb.append(" ");
-            }
+        for (String arg : args) {
+            sb.append(arg);
+            sb.append(" ");
         }
         sb.replace(sb.length() - 1, sb.length(), "\n");
         return new CommandResult(sb.toString());

@@ -15,7 +15,8 @@ public class Shell implements Runnable {
     @Override
     public void run() {
         while (true) {
-            String[] expression = read();
+            System.out.print("$ ");
+            Expression expression = read();
             CommandResult result = evaluate(expression);
 
             if (result.shouldExit()) {
@@ -26,14 +27,13 @@ public class Shell implements Runnable {
         }
     }
 
-    public String[] read() {
-        System.out.print("$ ");
+    public Expression read() {
         String line = in.nextLine();
-        return line.split("( +)");
+        return new Expression(line);
     }
 
-    public CommandResult evaluate(String[] expression) {
-        Command command = this.commandFactory.getCommand(expression[0]);
-        return command.execute(expression);
+    public CommandResult evaluate(Expression expression) {
+        Command command = this.commandFactory.getCommand(expression.command());
+        return command.execute(expression.arguments());
     }
 }
