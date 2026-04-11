@@ -6,6 +6,7 @@ public class WindowsShellContext
         extends AbstractShellContext implements ShellContext {
     private static final String[] PATH_EXT = System.getenv("PATHEXT").split(PATH_SEPARATOR);
 
+    @Override
     boolean isExecutable(String directory, String commandName) {
         for (String extension : PATH_EXT) {
             File file = new File(directory, commandName + extension);
