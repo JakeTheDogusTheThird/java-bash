@@ -1,14 +1,18 @@
 package shell;
 
 
+import shell.command.Command;
+import shell.command.CommandResult;
+import shell.context.ShellContext;
+
 import java.util.Scanner;
 
 public class Shell implements Runnable {
-    private final CommandFactory commandFactory;
+    private final ShellContext shellContext;
     private final Scanner in;
 
-    public Shell(CommandFactory commandFactory, Scanner in) {
-        this.commandFactory = commandFactory;
+    public Shell(ShellContext shellContext, Scanner in) {
+        this.shellContext = shellContext;
         this.in = in;
     }
 
@@ -33,7 +37,7 @@ public class Shell implements Runnable {
     }
 
     public CommandResult evaluate(Expression expression) {
-        Command command = this.commandFactory.getCommand(expression.command());
+        Command command = this.shellContext.getCommand(expression.command());
         return command.execute(expression.arguments());
     }
 }

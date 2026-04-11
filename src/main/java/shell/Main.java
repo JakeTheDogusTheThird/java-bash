@@ -1,15 +1,19 @@
 package shell;
 
-import java.util.Scanner;
+import shell.context.ContextFactory;
+import shell.context.ShellContext;
 
+import java.util.Scanner;
 
 //Read, Eval, Print, Loop
 
 public class Main {
     public static void main(String[] args) {
-        CommandFactory cf = new CommandFactory();
+        ShellContext context = ContextFactory.getContext();
         Scanner sc = new Scanner(System.in);
-        Shell shell = new Shell(cf, sc);
+        Shell shell = new Shell(context, sc);
         shell.run();
+
+        System.out.println(System.getProperty("os.name"));
     }
 }

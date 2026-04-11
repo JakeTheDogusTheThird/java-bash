@@ -1,4 +1,4 @@
-package shell;
+package shell.command;
 
 public class Exit implements Command {
     @Override
